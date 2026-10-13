@@ -1,0 +1,26 @@
+# Rebuilds the site on Vercel twice a day so menus stay fresh. Vercel downloads the
+# latest menus every time it builds (see vercel.json).
+#
+# Needs one repository secret, VERCEL_DEPLOY_HOOK: the Deploy Hook URL from
+# Vercel → your project → Settings → Git → Deploy Hooks (branch: main).
+name: Refresh menus
+
+on:
+  schedule:
+    - cron: '15 9 * * *' # 5:15 am Boston time (4:15 am in winter)
+    - cron: '15 18 * * *' # 2:15 pm Boston time (1:15 pm in winter)
+  workflow_dispatch: {} # run it by hand from the Actions tab
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Vercel to rebuild
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::error::Add the VERCEL_DEPLOY_HOOK secret first (see the README)."
+            exit 1
+          fi
+          curl --fail --silent --show-error -X POST "$HOOK"
