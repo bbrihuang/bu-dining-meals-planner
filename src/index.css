@@ -18,6 +18,7 @@
   --muted: #6b6866;
   --line: #e7e4e0;
   --line-strong: #cfcac4;
+  --control: #8c8782; /* the edge of a text field: 3:1 against the page, so it can be found */
   --scarlet: #cc0000;
   --scarlet-ink: #b80000;
   --scarlet-soft: #fbecec;
@@ -35,6 +36,7 @@
   --muted: #9c9a98;
   --line: #262629;
   --line-strong: #3a3a3e;
+  --control: #76767b;
   --scarlet: #cc0000;
   --scarlet-ink: #ff5c5c;
   --scarlet-soft: #2a1314;
@@ -51,6 +53,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-control: var(--control);
   --color-scarlet: var(--scarlet);
   --color-scarlet-ink: var(--scarlet-ink);
   --color-scarlet-soft: var(--scarlet-soft);

@@ -12,7 +12,8 @@ export default function ThemeToggle() {
 
   const flip = () => {
     document.documentElement.dataset.theme = next;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'dark' ? '#0c0c0d' : '#ffffff');
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
     try {
       localStorage.setItem('theme', next);
     } catch {
@@ -27,7 +28,7 @@ export default function ThemeToggle() {
       onClick={flip}
       aria-label={`Switch to ${next} mode`}
       title={`Switch to ${next} mode`}
-      className="group grid size-10 place-items-center border border-line text-ink transition-colors hover:border-ink"
+      className="group grid size-11 place-items-center border border-line text-ink transition-colors hover:border-ink"
     >
       {/* A half-filled circle that turns over: filled half on the left in light mode, on the right in dark. */}
       <svg viewBox="0 0 20 20" className="size-5 transition-transform duration-500 ease-out" style={{ transform: `rotate(${theme === 'dark' ? 180 : 0}deg)` }} aria-hidden="true">

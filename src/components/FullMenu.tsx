@@ -45,7 +45,7 @@ export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when
           options={periods.map((p) => ({ value: p, label: PERIOD_LABEL[p] }))}
           onChange={setPeriod}
         />
-        <label className="flex h-11 items-center gap-2 border border-line px-3 transition-colors focus-within:border-ink">
+        <label className="flex h-11 items-center gap-2 border border-control px-3 transition-colors focus-within:border-ink">
           <svg viewBox="0 0 16 16" className="size-4 shrink-0 text-muted" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <circle cx="7" cy="7" r="5" />
             <path d="m11 11 4 4" />
@@ -60,7 +60,11 @@ export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when
           />
         </label>
       </div>
-      {meal?.hours && <p className="mt-3 text-sm tabular-nums text-muted">Served {meal.hours}</p>}
+      <div className="mt-3 space-y-1 text-muted">
+        {meal?.hours && <p className="text-sm tabular-nums">Served {meal.hours}</p>}
+        {/* The chips beside each dish are abbreviations, and a tooltip doesn't exist on a phone. */}
+        <p className="text-xs">{TAGS.map(([, short, label]) => `${short} ${label.toLowerCase()}`).join(' · ')}</p>
+      </div>
 
       <div key={period} className="mt-6 animate-fade space-y-8">
         {stations.map((s) => (

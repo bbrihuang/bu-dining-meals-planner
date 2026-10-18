@@ -330,7 +330,7 @@ function Field(props: { label: string; hint?: string; unit?: string; value: stri
     <label className="block">
       <span className="text-sm text-muted">
         {props.label}
-        {props.hint && <span className="text-muted/70"> · {props.hint}</span>}
+        {props.hint && <span> · {props.hint}</span>}
       </span>
       <NumberBox {...props} className="mt-1.5" />
     </label>
@@ -339,7 +339,7 @@ function Field(props: { label: string; hint?: string; unit?: string; value: stri
 
 function NumberBox(props: { label?: string; unit?: string; value: string; onChange: (v: string) => void; className?: string }) {
   return (
-    <div className={`flex h-11 items-center border border-line px-3 transition-colors focus-within:border-ink ${props.className ?? ''}`}>
+    <div className={`flex h-11 items-center border border-control px-3 transition-colors focus-within:border-ink ${props.className ?? ''}`}>
       <input
         type="text"
         inputMode="decimal"

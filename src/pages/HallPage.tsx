@@ -51,7 +51,7 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
 
   return (
     <div className="animate-rise">
-      <Link to={`/${school.id}`} className="inline-flex items-center gap-2 text-sm text-muted hover:text-ink">
+      <Link to={`/${school.id}`} className="relative inline-flex items-center gap-2 text-sm text-muted after:absolute after:inset-x-0 after:-inset-y-3 hover:text-ink">
         <Arrow back className="size-4" /> {school.name}
       </Link>
 
@@ -59,7 +59,10 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
         <div className="min-w-0">
           {/* The heading doubles as the hall switcher: a native select laid over it. */}
           <h1 className="relative inline-flex max-w-full items-center gap-3 text-4xl font-semibold tracking-[-0.035em] has-[select:focus-visible]:outline-2 has-[select:focus-visible]:outline-scarlet sm:text-6xl">
-            <span className="truncate">{hall.name}</span>
+            {/* The select below carries the name for assistive tech; reading both says it twice. */}
+            <span className="truncate" aria-hidden="true">
+              {hall.name}
+            </span>
             <svg viewBox="0 0 16 16" className="size-5 shrink-0 text-scarlet sm:size-7" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="m3 6 5 5 5-5" />
             </svg>
@@ -78,7 +81,7 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
           </h1>
           <p className="mt-2 text-muted">{hall.blurb}</p>
         </div>
-        <a href={hall.menuUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-ink">
+        <a href={hall.menuUrl} target="_blank" rel="noreferrer" className="relative inline-flex items-center gap-1.5 text-sm text-muted after:absolute after:inset-x-0 after:-inset-y-3 hover:text-ink">
           Official menu
           <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <path d="M4 1h7v7M11 1 1 11" />
@@ -108,7 +111,10 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
           <TargetsPanel targets={targets} onChange={setTargets} />
         </aside>
 
-        <section aria-label={view === 'plan' ? 'Meal plan' : 'Full menu'} className="min-w-0">
+        <section aria-labelledby="view-title" className="min-w-0">
+          <h2 id="view-title" className="sr-only">
+            {view === 'plan' ? 'Meal plan' : 'Full menu'}
+          </h2>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="w-full max-w-xs">
               <Segmented<View>

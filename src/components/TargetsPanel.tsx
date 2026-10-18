@@ -56,7 +56,7 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls="targets-body"
-          className="flex min-w-0 items-center gap-2 text-sm font-medium lg:hidden"
+          className="relative flex min-w-0 items-center gap-2 text-sm font-medium after:absolute after:inset-x-0 after:-inset-y-4 lg:hidden"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden whitespace-nowrap tabular-nums">
             <span>

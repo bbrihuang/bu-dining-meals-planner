@@ -26,7 +26,7 @@ export default function App() {
       <div className="flex min-h-dvh flex-col">
         <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-            <Link to="/" className="flex items-center gap-3 font-display text-[1.05rem] font-semibold tracking-tight">
+            <Link to="/" className="relative flex items-center gap-3 font-display text-[1.05rem] font-semibold tracking-tight after:absolute after:inset-x-0 after:-inset-y-4">
               <Logo />
               <span>Dining Hall Planner</span>
             </Link>

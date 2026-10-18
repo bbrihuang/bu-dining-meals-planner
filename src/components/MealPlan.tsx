@@ -142,7 +142,7 @@ function MealCard({
           <button
             type="button"
             onClick={onNext}
-            className="group flex items-center gap-2 border border-line-strong bg-bg px-3 py-1.5 text-sm font-medium transition-colors hover:border-ink"
+            className="group flex min-h-11 items-center gap-2 border border-line-strong bg-bg px-3 text-sm font-medium transition-colors hover:border-ink"
           >
             <svg viewBox="0 0 16 16" className="size-3.5 transition-transform duration-500 group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3.5H10" />
@@ -162,7 +162,7 @@ function PlateRow({ entry, onExclude }: { entry: PlateItem; onExclude: () => voi
   const { item, servings } = entry;
   const m = sumMacros([entry]);
   return (
-    <li className="grid grid-cols-[5rem_minmax(0,1fr)_auto] items-start gap-x-4 px-5 py-3.5">
+    <li className="grid grid-cols-[4rem_minmax(0,1fr)_auto] items-start gap-x-3 px-5 py-3.5 sm:grid-cols-[5rem_minmax(0,1fr)_auto] sm:gap-x-4">
       <span className="pt-0.5 font-display text-sm font-semibold tabular-nums">{formatAmount(item, servings)}</span>
       <div className="min-w-0">
         <p className="font-medium leading-snug">{item.name}</p>
@@ -188,7 +188,7 @@ function PlateRow({ entry, onExclude }: { entry: PlateItem; onExclude: () => voi
           onClick={onExclude}
           title="Not this: plan without it"
           aria-label={`Plan without ${item.name}`}
-          className="grid size-7 place-items-center border border-transparent text-muted transition-colors hover:border-line-strong hover:text-scarlet-ink"
+          className="relative grid size-7 place-items-center border border-transparent text-muted transition-colors after:absolute after:-inset-2 hover:border-line-strong hover:text-scarlet-ink"
         >
           <svg viewBox="0 0 12 12" className="size-2.5" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <path d="M1 1l10 10M11 1 1 11" />
