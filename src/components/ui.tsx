@@ -46,9 +46,10 @@ export function Segmented<T extends string>({
   );
 }
 
-export function Notice({ children, action }: { children: ReactNode; action?: ReactNode }) {
+/** `alert` interrupts a screen reader (something failed); `status` waits for a pause. */
+export function Notice({ children, action, tone = 'status' }: { children: ReactNode; action?: ReactNode; tone?: 'status' | 'alert' }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-l-2 border-scarlet bg-surface px-4 py-3 text-sm">
+    <div role={tone} className="flex flex-wrap items-center justify-between gap-3 border-l-2 border-scarlet bg-surface px-4 py-3 text-sm">
       <p>{children}</p>
       {action}
     </div>

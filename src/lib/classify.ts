@@ -30,14 +30,31 @@ export const BREAKFAST_ONLY = /\b(yogurt|oatmeal|oats|cereal|granola|pancakes?|w
 /** A vegetable (or fruit) side that makes a plate look like a real meal. */
 export const isVegetable = (item: MenuItem) => VEG.test(item.name);
 
+/** Labels whose macros don't add up to their calories are data-entry mistakes. */
+function macrosDisagree(item: MenuItem): boolean {
+  const est = 4 * item.protein + 4 * item.carbs + 9 * item.fat;
+  return Math.abs(est - item.calories) > Math.max(60, 0.35 * item.calories);
+}
+
 export function isPlannable(item: MenuItem): boolean {
   if (item.options) return false;
   if ([NOT_A_DISH, DRINK, DESSERT, SNACK].some((re) => re.test(item.name))) return false;
   if (/bakery|bliss|pastry|dessert/i.test(item.station) && !/\b(bagel|toast|oat|english muffin)\b/i.test(item.name)) return false;
   if (item.calories < 40 || item.calories > 900) return false;
-  // Labels whose macros don't add up to their calories are data-entry mistakes.
-  const est = 4 * item.protein + 4 * item.carbs + 9 * item.fat;
-  return Math.abs(est - item.calories) <= Math.max(60, 0.35 * item.calories);
+  return !macrosDisagree(item);
+}
+
+/** One listed serving above this is a label mistake (a whole tray, a misplaced decimal). */
+export const SUSPECT_CALORIES = 1200;
+
+/**
+ * Numbers too odd to take at face value: the Full menu warns about these. Menu data
+ * comes straight from the dining hall, so a mistake there would otherwise read as fact.
+ * (The planner already skips them: see isPlannable.)
+ */
+export function isSuspect(item: MenuItem): boolean {
+  if (item.options) return false; // a "Create Your Own" station lists zeros; its options are checked on their own
+  return item.calories > SUSPECT_CALORIES || (item.calories >= 40 && macrosDisagree(item));
 }
 
 /** Roles an item can fill. Most fill one; a few (a chicken sandwich) fill more. */

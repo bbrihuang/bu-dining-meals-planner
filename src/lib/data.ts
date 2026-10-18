@@ -75,6 +75,15 @@ export function parseHours(hours: string | undefined): [number, number] | null {
   return times.length === 2 ? [times[0], times[1]] : null;
 }
 
+/** Menus refresh twice a day, so one this much older than that has probably missed a refresh. */
+export const MENUS_OLD_AFTER_MS = 36 * 60 * 60 * 1000;
+
+/** True when the menus were downloaded long enough ago that today's dishes may have changed. */
+export function menusAreOld(fetchedAt: string, now = Date.now()): boolean {
+  const at = new Date(fetchedAt).getTime();
+  return Number.isFinite(at) && now - at > MENUS_OLD_AFTER_MS;
+}
+
 /** When menus were last downloaded: "today at 5:15 AM", "Oct 8 at 2:04 PM". */
 export function updatedLabel(iso: string, timeZone: string): string {
   const at = new Date(iso);

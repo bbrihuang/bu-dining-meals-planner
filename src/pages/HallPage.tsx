@@ -8,7 +8,7 @@ import { Arrow } from '../components/Shapes';
 import TargetsPanel from '../components/TargetsPanel';
 import { Notice, Segmented, Skeleton } from '../components/ui';
 import { findSchool, type DiningHall, type School } from '../data/schools';
-import { dayLabel, todayIn, updatedLabel, useHallDay, useSchoolIndex } from '../lib/data';
+import { dayLabel, menusAreOld, todayIn, updatedLabel, useHallDay, useSchoolIndex } from '../lib/data';
 import { useStored } from '../lib/storage';
 import { DEFAULT_TARGETS } from '../lib/targets';
 import { useTitle } from '../lib/useTitle';
@@ -89,9 +89,16 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
       <div className="mt-8">
         {index.status === 'loading' && <Skeleton className="h-[4.5rem] w-full max-w-xl" />}
         {index.status === 'error' && (
-          <Notice action={<RetryButton onClick={index.retry} />}>Menus couldn’t load. Check your connection and try again.</Notice>
+          <Notice tone="alert" action={<RetryButton onClick={index.retry} />}>Menus couldn’t load. Check your connection and try again.</Notice>
         )}
         {stale && <Notice>The menus haven’t been updated in a while. Check back soon.</Notice>}
+        {index.status === 'ok' && !stale && menusAreOld(index.data.fetchedAt) && (
+          <div className="mb-4">
+            <Notice>
+              These menus were last updated {updatedLabel(index.data.fetchedAt, school.timeZone)}, so dishes may have changed. Check the official menu before you go.
+            </Notice>
+          </div>
+        )}
         {index.status === 'ok' && !stale && !dates.length && <Notice>{hall.name} hasn’t posted any upcoming menus.</Notice>}
         {dates.length > 0 && <DayPicker dates={dates} value={date} today={today} onChange={(d) => setParam('date', d === dates[0] ? null : d)} />}
       </div>
@@ -126,11 +133,11 @@ function HallView({ school, hall }: { school: School; hall: DiningHall }) {
               </div>
             )}
             {day.status === 'error' && (
-              <Notice action={<RetryButton onClick={day.retry} />}>This day’s menu couldn’t load.</Notice>
+              <Notice tone="alert" action={<RetryButton onClick={day.retry} />}>This day’s menu couldn’t load.</Notice>
             )}
             {day.status === 'ok' &&
               (view === 'plan' ? (
-                <MealPlan key={date} day={day.data} targets={targets} />
+                <MealPlan key={date} day={day.data} targets={targets} source={school.name} />
               ) : (
                 <FullMenu key={date} day={day.data} timeZone={date === today ? school.timeZone : null} />
               ))}

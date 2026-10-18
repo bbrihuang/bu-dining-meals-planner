@@ -2,6 +2,7 @@
 // calories and macros. Tap a dish for its details, or a "Create Your Own" station
 // for its options.
 import { useState } from 'react';
+import { isSuspect } from '../lib/classify';
 import { minutesNow, parseHours } from '../lib/data';
 import { fmt } from '../lib/targets';
 import { PERIOD_LABEL, PERIODS, type HallDay, type MenuItem, type Period } from '../lib/types';
@@ -95,6 +96,12 @@ function Tags({ item }: { item: MenuItem }) {
   );
 }
 
+/** Shown under a dish whose calories or macros look like a label mistake. */
+function SuspectNote({ item }: { item: MenuItem }) {
+  if (!isSuspect(item)) return null;
+  return <span className="mt-0.5 block text-xs text-scarlet-ink">Unusual numbers: check the label</span>;
+}
+
 function Numbers({ item }: { item: MenuItem }) {
   return (
     <span className="flex flex-col items-end gap-1 text-right">
@@ -143,6 +150,7 @@ function MenuRow({ item, startOpen }: { item: MenuItem; startOpen: boolean }) {
           <span className="font-medium text-ink">{item.name}</span>
           <Tags item={item} />
           <span className="mt-0.5 block text-xs text-muted">{cyo ? `${item.options!.length} options to build your own` : item.serving}</span>
+          <SuspectNote item={item} />
         </span>
         {cyo ? (
           <span className="grid size-7 place-items-center border border-line-strong text-ink" aria-hidden="true">
@@ -163,6 +171,7 @@ function MenuRow({ item, startOpen }: { item: MenuItem; startOpen: boolean }) {
                   <span className="text-sm font-medium">{o.name}</span>
                   <Tags item={o} />
                   <span className="block text-xs text-muted">{o.serving}</span>
+                  <SuspectNote item={o} />
                 </span>
                 <Numbers item={o} />
               </li>

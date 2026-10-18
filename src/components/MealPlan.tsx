@@ -8,7 +8,7 @@ import { fmt } from '../lib/targets';
 import { PERIOD_LABEL, type HallDay, type Macros, type Period, type PlateItem } from '../lib/types';
 import { MacroShape, MACROS, PeriodGlyph } from './Shapes';
 
-export default function MealPlan({ day, targets }: { day: HallDay; targets: Macros }) {
+export default function MealPlan({ day, targets, source }: { day: HallDay; targets: Macros; /** The school whose menus these are. */ source: string }) {
   const [choices, setChoices] = useState<Partial<Record<Period, number>>>({});
   const [excluded, setExcluded] = useState<Set<string>>(() => new Set());
   // Planning takes a few milliseconds; keep typing in the targets smooth.
@@ -23,7 +23,7 @@ export default function MealPlan({ day, targets }: { day: HallDay; targets: Macr
 
   return (
     <div className="space-y-4">
-      <DaySummary total={total} targets={targets} excluded={excluded.size} onReset={() => setExcluded(new Set())} />
+      <DaySummary total={total} targets={targets} source={source} excluded={excluded.size} onReset={() => setExcluded(new Set())} />
       {meals.map((meal, i) => (
         <MealCard
           key={meal.period}
@@ -38,7 +38,7 @@ export default function MealPlan({ day, targets }: { day: HallDay; targets: Macr
   );
 }
 
-function DaySummary({ total, targets, excluded, onReset }: { total: Macros; targets: Macros; excluded: number; onReset: () => void }) {
+function DaySummary({ total, targets, source, excluded, onReset }: { total: Macros; targets: Macros; source: string; excluded: number; onReset: () => void }) {
   const rows = [
     { key: 'calories' as const, label: 'Calories', unit: '', bar: 'bg-scarlet', shape: null },
     ...MACROS.map((m) => ({ key: m.key, label: m.label, unit: 'g', bar: m.bar, shape: m.key })),
@@ -80,6 +80,12 @@ function DaySummary({ total, targets, excluded, onReset }: { total: Macros; targ
           </button>
         </div>
       )}
+      <p className="border-t border-line px-5 py-2.5 text-xs text-muted">Numbers come from {source}’s published dining menus and are estimates.</p>
+      {/* The tiles are only visual; this tells a screen reader when the plan changes. */}
+      <p role="status" className="sr-only">
+        Day total: {fmt(total.calories)} of {fmt(targets.calories)} calories, {fmt(total.protein)} of {fmt(targets.protein)} grams of protein, {fmt(total.carbs)} of{' '}
+        {fmt(targets.carbs)} grams of carbs, {fmt(total.fat)} of {fmt(targets.fat)} grams of fat.
+      </p>
     </section>
   );
 }

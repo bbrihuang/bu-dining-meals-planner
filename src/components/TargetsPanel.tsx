@@ -1,7 +1,7 @@
 // Daily targets: calories plus protein, carbs and fat, typed in or filled by the
 // calculator. On phones it folds into a one-line summary above the plan.
 import { useState } from 'react';
-import { caloriesOf, fmt, TARGET_LIMITS } from '../lib/targets';
+import { caloriesOf, fmt, targetProblems, validTarget as valid } from '../lib/targets';
 import type { Macros } from '../lib/types';
 import MacroCalculator from './MacroCalculator';
 import { MacroShape, MACROS } from './Shapes';
@@ -15,11 +15,8 @@ const toDraft = (m: Macros): Draft => ({
   fat: String(m.fat),
 });
 
-const valid = (key: keyof Macros, s: string) => {
-  const n = Number(s);
-  const [min, max] = TARGET_LIMITS[key];
-  return s.trim() !== '' && Number.isFinite(n) && n >= min && n <= max;
-};
+/** The inputs have no outline of their own, so the whole box they sit in shows where you are. */
+const FOCUS_CELL = 'has-[:focus-visible]:outline-2 has-[:focus-visible]:-outline-offset-2 has-[:focus-visible]:outline-scarlet';
 
 export default function TargetsPanel({ targets, onChange }: { targets: Macros; onChange: (m: Macros) => void }) {
   const [draft, setDraft] = useState<Draft>(() => toDraft(targets));
@@ -42,6 +39,7 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
     setFilled((n) => n + 1);
   };
 
+  const problems = targetProblems(draft);
   const fromMacros = caloriesOf(targets);
   const off = Math.abs(fromMacros - targets.calories) / targets.calories;
   const shares = MACROS.map((m) => ({ ...m, share: ((m.key === 'fat' ? 9 : 4) * targets[m.key]) / Math.max(fromMacros, 1) }));
@@ -80,7 +78,7 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
       </div>
 
       <div id="targets-body" className={`${open ? 'block' : 'hidden'} lg:block`}>
-        <label key={`cal-${filled}`} className={`block border-b border-line px-5 py-4 ${filled ? 'animate-fade' : ''}`}>
+        <label key={`cal-${filled}`} className={`block border-b border-line px-5 py-4 ${FOCUS_CELL} ${filled ? 'animate-fade' : ''}`}>
           <span className="text-sm text-muted">Calories</span>
           <span className="mt-1 flex items-baseline gap-2">
             <input
@@ -88,6 +86,7 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
               onChange={(e) => edit('calories', e.target.value)}
               inputMode="numeric"
               aria-invalid={!valid('calories', draft.calories)}
+              aria-describedby={valid('calories', draft.calories) ? undefined : 'targets-problems'}
               className="w-full min-w-0 bg-transparent font-display text-5xl font-semibold tabular-nums tracking-tight outline-none aria-[invalid=true]:text-scarlet-ink"
             />
             <span className="text-sm text-muted">cal</span>
@@ -96,7 +95,7 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
 
         <div className="grid grid-cols-3 divide-x divide-line border-b border-line">
           {MACROS.map((m) => (
-            <label key={`${m.key}-${filled}`} className={`block px-4 py-3.5 ${filled ? 'animate-fade' : ''}`}>
+            <label key={`${m.key}-${filled}`} className={`block px-4 py-3.5 ${FOCUS_CELL} ${filled ? 'animate-fade' : ''}`}>
               <span className="flex items-center gap-1.5 text-xs text-muted">
                 <MacroShape macro={m.key} />
                 {m.label}
@@ -107,12 +106,22 @@ export default function TargetsPanel({ targets, onChange }: { targets: Macros; o
                   onChange={(e) => edit(m.key, e.target.value)}
                   inputMode="numeric"
                   aria-invalid={!valid(m.key, draft[m.key])}
+                  aria-describedby={valid(m.key, draft[m.key]) ? undefined : 'targets-problems'}
                   className="w-full min-w-0 bg-transparent font-display text-2xl font-semibold tabular-nums outline-none aria-[invalid=true]:text-scarlet-ink"
                 />
                 <span className="text-xs text-muted">g</span>
               </span>
             </label>
           ))}
+        </div>
+
+        {/* Always in the page, so a screen reader hears the message when it appears. */}
+        <div aria-live="polite">
+          {problems.length > 0 && (
+            <p id="targets-problems" className="border-b border-line px-5 py-3 text-sm text-scarlet-ink">
+              {problems.join(' ')} Your plan is still using your last valid targets.
+            </p>
+          )}
         </div>
 
         <div className="px-5 py-4">
