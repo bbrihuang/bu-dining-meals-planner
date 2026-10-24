@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T04:29:32.715Z",
+  "title": "Design System: Dining Hall Planner",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Desk Grey",
+        "dark": "#0f1114",
+        "usage": "Page ground.",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#252629",
+          "#434547",
+          "#646669",
+          "#87898c",
+          "#acaeb1",
+          "#cfd1d4",
+          "#edeff2"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "dark": "#181b20",
+        "usage": "Every container; text on ink fills.",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#aeaeae",
+          "#d1d1d1",
+          "#eeeeee"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Soft Surface",
+        "dark": "#1f2329",
+        "usage": "Soft buttons, idle chips, opened rows, icon buttons.",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#262628",
+          "#444547",
+          "#656668",
+          "#88898b",
+          "#adaeb0",
+          "#d0d1d3",
+          "#edeef0"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "dark": "#f1f3f5",
+        "usage": "Text, primary actions, selected pills, focus, bars.",
+        "tonalRamp": [
+          "#090b10",
+          "#24262c",
+          "#43454b",
+          "#63666c",
+          "#868990",
+          "#abaeb5",
+          "#ced1d8",
+          "#ebeef6"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "dark": "#a0a7b2",
+        "usage": "Secondary text and units.",
+        "tonalRamp": [
+          "#070b13",
+          "#212730",
+          "#404550",
+          "#606671",
+          "#838995",
+          "#a8aeba",
+          "#cad1de",
+          "#e8effc"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "dark": "#2a2e35",
+        "usage": "Dividers, pill edges, bar tracks.",
+        "tonalRamp": [
+          "#090b0e",
+          "#24272a",
+          "#434549",
+          "#64666a",
+          "#87898e",
+          "#abaeb3",
+          "#ced1d6",
+          "#eceff4"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "dark": "#3b4049",
+        "usage": "Pill hover edge, empty slider track, switch off.",
+        "tonalRamp": [
+          "#080b10",
+          "#23272d",
+          "#41454c",
+          "#62666d",
+          "#858991",
+          "#a9aeb6",
+          "#ccd1d9",
+          "#eaeff7"
+        ]
+      },
+      "control": {
+        "role": "neutral",
+        "displayName": "Field Edge",
+        "dark": "#7c838e",
+        "usage": "Text field edge, 3:1 against the card.",
+        "tonalRamp": [
+          "#070b13",
+          "#22272f",
+          "#40454f",
+          "#616671",
+          "#838994",
+          "#a8aeba",
+          "#cbd1dd",
+          "#e8effb"
+        ]
+      },
+      "school-bu": {
+        "role": "primary",
+        "displayName": "School Colour (BU Scarlet)",
+        "dark": "computed by schoolScope(): lightened only until 3:1 against #0f1114 (BU stays #cc0000)",
+        "usage": "Example value; the real token is per school, from data/schools.ts, applied only inside [data-school].",
+        "tonalRamp": [
+          "#300000",
+          "#5c0000",
+          "#8c0000",
+          "#bf110a",
+          "#e74c3c",
+          "#ff7e6c",
+          "#ffaa98",
+          "#ffcdbc"
+        ]
+      },
+      "danger": {
+        "role": "error",
+        "displayName": "Error Red",
+        "dark": "#f2554a",
+        "usage": "Invalid field ring, error notices.",
+        "tonalRamp": [
+          "#300000",
+          "#5c0000",
+          "#8c0000",
+          "#bb1f11",
+          "#e64e3b",
+          "#ff7f6b",
+          "#ffaa96",
+          "#ffcdba"
+        ]
+      },
+      "danger-ink": {
+        "role": "error",
+        "displayName": "Error Ink",
+        "dark": "#ff8a80",
+        "usage": "Error text.",
+        "tonalRamp": [
+          "#300000",
+          "#5c0000",
+          "#8a0000",
+          "#b32f24",
+          "#dd5749",
+          "#ff7e6d",
+          "#ffaa98",
+          "#ffcdbc"
+        ]
+      },
+      "danger-soft": {
+        "role": "error",
+        "displayName": "Error Wash",
+        "dark": "#3a1917",
+        "usage": "Error notice and message fill.",
+        "tonalRamp": [
+          "#120807",
+          "#2f2322",
+          "#4f4140",
+          "#716261",
+          "#948583",
+          "#baaaa8",
+          "#ddcdcb",
+          "#fbeae8"
+        ]
+      },
+      "good": {
+        "role": "success",
+        "displayName": "Open Green",
+        "dark": "#57c785",
+        "usage": "Open now chip and dot, diet tag text.",
+        "tonalRamp": [
+          "#001600",
+          "#003504",
+          "#005624",
+          "#1d7945",
+          "#489d67",
+          "#6fc48b",
+          "#92e8ad",
+          "#afffca"
+        ]
+      },
+      "good-soft": {
+        "role": "success",
+        "displayName": "Open Wash",
+        "dark": "#15291e",
+        "usage": "Open now chip and diet tag fill.",
+        "tonalRamp": [
+          "#050e08",
+          "#1e2a22",
+          "#3c4941",
+          "#5d6a61",
+          "#808d84",
+          "#a4b2a9",
+          "#c7d5cc",
+          "#e4f3e9"
+        ]
+      },
+      "warn-soft": {
+        "role": "warning",
+        "displayName": "Caution Cream",
+        "dark": "#2e2611",
+        "usage": "Non-error status notices.",
+        "tonalRamp": [
+          "#120a00",
+          "#2e250d",
+          "#4d442b",
+          "#6f654b",
+          "#93896d",
+          "#b8ad91",
+          "#dbd0b3",
+          "#f9eed0"
+        ]
+      },
+      "protein": {
+        "role": "data",
+        "displayName": "Protein Cobalt",
+        "dark": "#7b93ff",
+        "usage": "Protein dot and bar, inside the optional breakdown only.",
+        "tonalRamp": [
+          "#040041",
+          "#0c1270",
+          "#1f34a2",
+          "#3756d6",
+          "#587dfd",
+          "#80a7ff",
+          "#a7ccff",
+          "#c9ebff"
+        ]
+      },
+      "carbs": {
+        "role": "data",
+        "displayName": "Carbs Amber",
+        "dark": "#f0b44f",
+        "usage": "Carbs dot and bar, inside the optional breakdown only.",
+        "tonalRamp": [
+          "#290000",
+          "#500400",
+          "#752d00",
+          "#9b5000",
+          "#c27500",
+          "#ea9a34",
+          "#ffbd5d",
+          "#ffde8b"
+        ]
+      },
+      "fat": {
+        "role": "data",
+        "displayName": "Fat Sage",
+        "dark": "#8fb07a",
+        "usage": "Fat dot and bar, inside the optional breakdown only.",
+        "tonalRamp": [
+          "#001200",
+          "#043100",
+          "#26510d",
+          "#477433",
+          "#6a9856",
+          "#8ebe7a",
+          "#b0e29c",
+          "#cdffb8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home welcome only; 3.75rem from sm."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "School and hall names; 2.25rem from sm."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "The calorie total on the goal card."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Meal names; hall cards at 1.5rem."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Pick your school / Pick your dining hall."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Dish lines, one size; amount 700, name 500."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Pills (600) and buttons (650)."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Station lines, hours, notices, row calories."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "State chips, macro labels, provenance, footer."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Diet tags."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-lift",
+        "value": "0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18)",
+        "dark": "0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6)",
+        "purpose": "Every card and the calculator sheet; the only elevation."
+      },
+      {
+        "name": "hairline-edge",
+        "value": "inset 0 0 0 1px var(--line)",
+        "purpose": "Pills and soft buttons; line-strong on pill hover; control colour on fields."
+      },
+      {
+        "name": "field-focus",
+        "value": "inset 0 0 0 2px var(--ink)",
+        "purpose": "Focused field; 2px var(--danger) when invalid."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid var(--ink); outline-offset: 2px",
+        "purpose": "Keyboard focus everywhere."
+      },
+      {
+        "name": "slider-thumb",
+        "value": "0 0 0 2px var(--ink), 0 2px 6px rgb(0 0 0 / 0.2)",
+        "purpose": "Range thumb only."
+      },
+      {
+        "name": "sheet-backdrop",
+        "value": "rgb(10 12 16 / 0.45)",
+        "purpose": "Calculator dialog backdrop."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "All movement: press, plate-in, sheet."
+      },
+      {
+        "name": "press",
+        "value": "transform: scale(0.97), 120ms ease-out",
+        "purpose": "Pills and buttons on :active; linked cards 0.99, icon buttons 0.95."
+      },
+      {
+        "name": "colour-change",
+        "value": "150ms ease",
+        "purpose": "Background, colour and edge changes."
+      },
+      {
+        "name": "plate-in",
+        "value": "200ms ease-out; from opacity 0, perspective(900px) rotateX(-12deg) translateY(6px), origin top center",
+        "purpose": "Another option turns the plate over."
+      },
+      {
+        "name": "sheet-in",
+        "value": "260ms ease-out; from opacity 0, translateY(24px)",
+        "purpose": "Calculator dialog entrance."
+      },
+      {
+        "name": "fade",
+        "value": "180ms ease",
+        "purpose": "Macro breakdown, goal editor, menu period change."
+      },
+      {
+        "name": "bar-fill",
+        "value": "width 300ms",
+        "purpose": "Progress and share bars."
+      },
+      {
+        "name": "hover-gate",
+        "value": "@media (hover: hover) and (pointer: fine)",
+        "purpose": "Hover styles only on fine pointers."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce): animation and transition durations 0.01ms",
+        "purpose": "All motion collapses."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "schoolScope": {
+      "source": "src/components/ui.tsx schoolScope(color), [data-school] in src/index.css",
+      "light": "--school-light = record colour; --on-school-light = white if white reaches 4.5:1 (or beats ink), else ink #16181d",
+      "dark": "--school-dark = colour mixed toward white in 5% steps until 3:1 against #0f1114; --on-school-dark chosen the same way",
+      "appliedTo": [
+        "goal-card band",
+        "selected day pill",
+        "school initials tile",
+        "text selection and caret inside scope"
+      ],
+      "tests": "test/school-colour.test.ts"
+    },
+    "knownDrift": [
+      "The brief planned a 180ms plate flip; the build ships 200ms. The build value is recorded."
+    ]
+  },
+  "components": [
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "The single primary action in a context (\"Use these numbers\", \"Try again\").",
+      "html": "<button class=\"ds-btn-ink\">Use these numbers</button>",
+      "css": ".ds-btn-ink{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:12px;font-size:0.9375rem;font-weight:650;cursor:pointer;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:background-color 150ms ease,transform 120ms var(--ease-out);background:var(--ink);color:var(--card);}.ds-btn-ink:active{transform:scale(0.97);}@media (hover:hover) and (pointer:fine){.ds-btn-ink:hover{background:color-mix(in oklab,var(--ink) 85%,var(--card));}}.ds-btn-ink:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}"
+    },
+    {
+      "name": "Soft Button",
+      "kind": "button",
+      "refersTo": "button-soft",
+      "description": "Actions repeated on every card or secondary (\"Another option\", \"Edit goal\").",
+      "html": "<button class=\"ds-btn-soft\"><svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3.5H10\"/></svg>Another option <span class=\"ds-btn-soft-count\">1 of 3</span></button>",
+      "css": ".ds-btn-soft{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:12px;font-size:0.9375rem;font-weight:650;cursor:pointer;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:background-color 150ms ease,transform 120ms var(--ease-out);background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);}.ds-btn-soft-count{font-weight:500;color:var(--muted);}.ds-btn-soft:active{transform:scale(0.97);}@media (hover:hover) and (pointer:fine){.ds-btn-soft:hover{background:var(--line);}}.ds-btn-soft:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}"
+    },
+    {
+      "name": "Pills",
+      "kind": "chip",
+      "refersTo": "pill",
+      "description": "Day, view and filter choices; the selected view is ink, the selected day takes the school colour.",
+      "html": "<div class=\"ds-pills\"><button class=\"ds-pill ds-pill-day\" aria-pressed=\"true\">Today <span>13</span></button><button class=\"ds-pill\" aria-pressed=\"false\">Wed <span class=\"ds-pill-muted\">14</span></button><button class=\"ds-pill ds-pill-on\" aria-pressed=\"true\">Your plan</button><button class=\"ds-pill\">Full menu</button></div>",
+      "css": ".ds-pills{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);display:flex;flex-wrap:wrap;gap:8px;}.ds-pill{font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);font-size:0.9375rem;font-weight:600;cursor:pointer;transition:background-color 150ms ease,box-shadow 150ms ease,transform 120ms var(--ease-out);}.ds-pill-muted{color:var(--muted);}.ds-pill:active{transform:scale(0.97);}@media (hover:hover) and (pointer:fine){.ds-pill:hover{box-shadow:inset 0 0 0 1px var(--line-strong);}}.ds-pill-on{background:var(--ink);color:var(--card);box-shadow:none;}.ds-pill-day{background:var(--school);color:var(--on-school);box-shadow:none;}.ds-pill-day span{font-weight:500;}.ds-pill:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Search and number fields with a findable 3:1 edge.",
+      "html": "<label class=\"ds-field\"><svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"7\" cy=\"7\" r=\"4.5\"/><path d=\"m10.5 10.5 3 3\"/></svg><input placeholder=\"Search dishes\"></label>",
+      "css": ".ds-field{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;background:var(--card);color:var(--muted);box-shadow:inset 0 0 0 1px var(--control);transition:box-shadow 120ms ease;}.ds-field input{flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:1rem;color:var(--ink);}.ds-field:focus-within{box-shadow:inset 0 0 0 2px var(--ink);}"
+    },
+    {
+      "name": "State Chip and Diet Tag",
+      "kind": "chip",
+      "refersTo": "state-chip-open",
+      "description": "Open now / Later today / Closed, and full-word diet tags.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-state ds-state-open\"><span class=\"ds-dot\"></span>Open now</span><span class=\"ds-state\">Later today</span><span class=\"ds-tag\">Vegan</span><span class=\"ds-tag\">Halal</span></div>",
+      "css": ".ds-chips{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}.ds-state{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--surface);color:var(--muted);font-size:0.75rem;font-weight:600;}.ds-state-open{background:var(--good-soft);color:var(--good);}.ds-dot{width:6px;height:6px;border-radius:999px;background:var(--good);}.ds-tag{padding:2px 8px;border-radius:999px;background:var(--good-soft);color:var(--good);font-size:0.6875rem;font-weight:600;line-height:1rem;}"
+    },
+    {
+      "name": "Goal Card",
+      "kind": "card",
+      "refersTo": "goal-band",
+      "description": "The day on one card: school band, calorie figure, progress bar, macro switch.",
+      "html": "<section class=\"ds-goal\"><div class=\"ds-goal-band\"></div><div class=\"ds-goal-body\"><div class=\"ds-goal-head\"><span>Your day</span><button class=\"ds-goal-edit\">Edit goal</button></div><p class=\"ds-goal-fig\">2,174 <span>of 2,200 cal planned</span></p><div class=\"ds-goal-track\"><div style=\"width:98.8%\"></div></div><label class=\"ds-goal-switch\"><span class=\"ds-sw\"></span>Show protein, carbs &amp; fat</label></div></section>",
+      "css": ".ds-goal{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;max-width:22rem;overflow:hidden;border-radius:18px;background:var(--card);color:var(--ink);box-shadow:var(--shadow);}.ds-goal-band{height:8px;background:var(--school);}.ds-goal-body{padding:14px 20px 20px;}.ds-goal-head{display:flex;justify-content:space-between;align-items:center;font-size:0.875rem;font-weight:600;color:var(--muted);}.ds-goal-edit{font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;min-height:36px;padding:0 14px;border:0;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font-size:0.875rem;font-weight:650;cursor:pointer;}@media (hover:hover) and (pointer:fine){.ds-goal-edit:hover{background:var(--line);}}.ds-goal-fig{margin:0;font-size:2rem;font-weight:700;line-height:1.25;letter-spacing:-0.025em;}.ds-goal-fig span{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0;}.ds-goal-track{margin-top:10px;height:8px;border-radius:999px;background:var(--line);overflow:hidden;}.ds-goal-track div{height:100%;border-radius:999px;background:var(--ink);}.ds-goal-switch{margin-top:12px;display:flex;align-items:center;gap:10px;font-size:0.875rem;font-weight:600;}.ds-sw{width:40px;height:24px;border-radius:999px;background:var(--line-strong);position:relative;}.ds-sw::after{content:\"\";position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:999px;background:var(--card);box-shadow:0 1px 2px rgb(0 0 0 / 0.2);}"
+    },
+    {
+      "name": "Meal Card",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "One meal: name, state, amount-first plate rows, plate total.",
+      "html": "<article class=\"ds-meal\"><header class=\"ds-meal-head\"><h3>Lunch</h3><span class=\"ds-meal-state\"><span></span>Open now</span><span class=\"ds-meal-hours\">11:00 AM – 5:00 PM</span></header><ul class=\"ds-meal-rows\"><li><div><p><b>1¼ cups</b> Confetti Rice</p><p class=\"ds-meal-sub\">Gluten Free</p></div><span class=\"ds-meal-cal\"><b>388</b> cal</span><button class=\"ds-meal-x\" aria-label=\"Not this\"><svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M2 2l8 8M10 2 2 10\"/></svg></button></li><li><div><p><b>6 oz</b> Carne Asada</p><p class=\"ds-meal-sub\">World</p></div><span class=\"ds-meal-cal\"><b>240</b> cal</span><button class=\"ds-meal-x\" aria-label=\"Not this\"><svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M2 2l8 8M10 2 2 10\"/></svg></button></li></ul><footer class=\"ds-meal-foot\"><b>628</b> cal</footer></article>",
+      "css": ".ds-meal{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;overflow:hidden;border-radius:18px;background:var(--card);color:var(--ink);box-shadow:var(--shadow);}.ds-meal-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:16px 20px 8px;}.ds-meal-head h3{margin:0;font-size:1.25rem;font-weight:700;letter-spacing:-0.025em;}.ds-meal-state{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--good-soft);color:var(--good);font-size:0.75rem;font-weight:600;}.ds-meal-state span{width:6px;height:6px;border-radius:999px;background:var(--good);}.ds-meal-hours{margin-left:auto;font-size:0.875rem;color:var(--muted);}.ds-meal-rows{list-style:none;margin:0;padding:0 8px;}.ds-meal-rows li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:start;padding:10px 12px;border-radius:12px;}.ds-meal-rows p{margin:0;font-weight:500;line-height:1.375;}.ds-meal-rows b{font-weight:700;}.ds-meal-rows .ds-meal-sub{font-size:0.875rem;color:var(--muted);font-weight:400;}.ds-meal-cal{font-size:0.875rem;color:var(--muted);padding-top:2px;}.ds-meal-cal b{font-weight:600;color:var(--ink);}.ds-meal-x{display:grid;place-items:center;width:44px;height:44px;margin:-8px -4px -8px 0;border:0;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:background-color 150ms ease,color 150ms ease;}@media (hover:hover) and (pointer:fine){.ds-meal-x:hover{background:var(--surface);color:var(--ink);}}.ds-meal-x:active{transform:scale(0.95);}.ds-meal-x:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}.ds-meal-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:0.875rem;color:var(--muted);}.ds-meal-foot b{color:var(--ink);}"
+    },
+    {
+      "name": "Navigation Header",
+      "kind": "nav",
+      "refersTo": "card",
+      "description": "Sticky header: neutral plate logo and name, round theme toggle.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\"><svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\" aria-hidden=\"true\"><rect width=\"32\" height=\"32\" rx=\"8\" fill=\"#16181d\"/><circle cx=\"16\" cy=\"16\" r=\"9\" fill=\"#fff\"/><circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"none\" stroke=\"#c9ced6\" stroke-width=\"1.25\"/></svg>Dining Hall Planner</a><button class=\"ds-nav-toggle\" aria-label=\"Dark mode\"><svg viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M16 12.5A6.5 6.5 0 0 1 7.5 4a6.5 6.5 0 1 0 8.5 8.5Z\"/></svg></button></header>",
+      "css": ".ds-nav{--bg:#eef0f3;--card:#fff;--surface:#f6f7f9;--ink:#16181d;--muted:#5d636e;--line:#e3e6eb;--line-strong:#c9ced6;--control:#8b919c;--danger:#c42b1c;--good:#1f7a46;--good-soft:#e5f4ea;--school:#cc0000;--on-school:#fff;--shadow:0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);--ease-out:cubic-bezier(0.23,1,0.32,1);font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 16px;background:var(--bg);}.ds-nav-brand{display:flex;align-items:center;gap:10px;font-size:1.0625rem;font-weight:700;letter-spacing:-0.025em;color:var(--ink);text-decoration:none;}.ds-nav-toggle{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer;transition:background-color 150ms ease;}@media (hover:hover) and (pointer:fine){.ds-nav-toggle:hover{background:var(--card);}}.ds-nav-toggle:active{transform:scale(0.95);}.ds-nav-toggle:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Meal-Plan Card",
+    "overview": "The app reads like a student ID and a meal-plan card laid on a desk: a calm grey ground, white rounded cards with a soft real shadow, ink text and ink actions. Your goal sits on one card with your school's colour band across its top; each meal is its own card listing exactly what to take, amount first (\"1½ cups Confetti Rice\"). Numbers go only as deep as you ask: calories by default, protein, carbs and fat behind one switch.\n\nDensity is phone-first and quiet. One family (Figtree) carries everything, hierarchy comes from weight and size rather than colour, and every figure is tabular so columns of calories line up. Colour is rationed by meaning: the school colour marks identity only on school pages, green means \"open now\" and dietary tags, a separate red means something went wrong, and the three macro colours exist only inside the optional breakdown, each beside its name. The system rejects the macro-tracker dashboard (KPI tiles, rings, glyph legends) and the dark brutalist grid the app had before.\n\nThe same world works in light and dark: a near-black ground (#0f1114) with raised charcoal cards (#181b20), light ink (#f1f3f5), and every semantic colour retuned for the dark ground. The school colour is recomputed per mode so any school stays legible.",
+    "keyCharacteristics": [
+      "Grey ground, white cards (18px radius, soft two-layer shadow), ink text.",
+      "Figtree Variable as the only family, tabular numbers everywhere.",
+      "School colour only inside school scope: goal-card band, selected day, school tile.",
+      "Amount-first plate rows; calories always, macros on request.",
+      "Ink for the single primary action, soft buttons for repeated per-meal actions, pills for choices.",
+      "44px minimum targets, ease-out motion, press scale 0.97, reduced motion honoured."
+    ],
+    "rules": [
+      {
+        "name": "The School Scope Rule",
+        "body": "The school colour exists only inside a school scope (goal-card band, selected day, school tile). Everything else, including the logo, stays neutral, so any school fits without redesign.",
+        "section": "colors"
+      },
+      {
+        "name": "The Own Red Rule",
+        "body": "Errors use their own red, never the school colour, so a red (or green) school never reads as a warning.",
+        "section": "colors"
+      },
+      {
+        "name": "The Named Macro Rule",
+        "body": "A protein, carbs or fat colour never appears without its word next to it, and only inside the breakdown the student switched on.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight Not Size Rule",
+        "body": "Inside a plate, hierarchy is weight: amount bold, name medium, station muted. Dish lines never change size.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number is tabular (`font-variant-numeric: tabular-nums` on body); no figure is set in proportional digits.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Lift Rule",
+        "body": "Cards are the only lifted surfaces, and they share one shadow. Don't stack cards inside cards or add a second elevation level.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep the ground grey (`ground`) and put content on white 18px cards with the single card shadow.",
+      "**Do** use Figtree Variable for every role and keep numbers tabular.",
+      "**Do** apply school colour only through `schoolScope()` and only to the goal-card band, the selected day and the school tile.",
+      "**Do** write plate rows amount-first in real servings, with the amount bold and the dish name medium.",
+      "**Do** show calories by default and keep protein, carbs and fat behind \"Show protein, carbs & fat\".",
+      "**Do** use one ink button for the single primary action and soft buttons for actions repeated on every card.",
+      "**Do** keep every target at least 44px, gate hover to `(hover: hover) and (pointer: fine)`, press to 0.97, and respect reduced motion.",
+      "**Do** spell diet tags and state chips out in words."
+    ],
+    "donts": [
+      "**Don't** use the school colour for errors, links, buttons or anywhere outside a school scope; errors use `danger`.",
+      "**Don't** show a macro colour without its name beside it, or outside the optional breakdown.",
+      "**Don't** build KPI tiles, progress rings or glyph legends; the goal card's bars are the only meter.",
+      "**Don't** add a second font family or proportional figures.",
+      "**Don't** give the logo a school colour; it stays ink and white.",
+      "**Don't** add a second shadow level, borders around cards, or cards inside cards."
+    ]
+  }
+}

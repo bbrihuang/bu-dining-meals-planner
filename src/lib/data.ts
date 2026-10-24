@@ -75,6 +75,18 @@ export function parseHours(hours: string | undefined): [number, number] | null {
   return times.length === 2 ? [times[0], times[1]] : null;
 }
 
+export type ServingState = 'open' | 'later' | 'closed';
+
+/** Is a meal being served right now, later today, or over? Null when it isn't today or the hours don't read. */
+export function servingState(hours: string | undefined, timeZone: string | null): ServingState | null {
+  if (!timeZone) return null;
+  const span = parseHours(hours);
+  if (!span) return null;
+  const now = minutesNow(timeZone);
+  if (now < span[0]) return 'later';
+  return now <= span[1] ? 'open' : 'closed';
+}
+
 /** Menus refresh twice a day, so one this much older than that has probably missed a refresh. */
 export const MENUS_OLD_AFTER_MS = 36 * 60 * 60 * 1000;
 

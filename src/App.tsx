@@ -24,9 +24,9 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <div className="flex min-h-dvh flex-col">
-        <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
+        <header className="sticky top-0 z-30 bg-bg">
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-            <Link to="/" className="relative flex items-center gap-3 font-display text-[1.05rem] font-semibold tracking-tight after:absolute after:inset-x-0 after:-inset-y-4">
+            <Link to="/" className="relative flex items-center gap-2.5 text-lg font-bold tracking-tight after:absolute after:inset-x-0 after:-inset-y-4">
               <Logo />
               <span>Dining Hall Planner</span>
             </Link>
@@ -34,7 +34,7 @@ export default function App() {
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-20 pt-2 sm:px-6 sm:pt-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/:schoolId" element={<SchoolPage />} />
@@ -43,10 +43,10 @@ export default function App() {
           </Routes>
         </main>
 
-        <footer className="border-t border-line">
+        <footer>
           <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6">
             <p>Menus come from each school's dining website and refresh twice a day.</p>
-            <p>Nutrition is an estimate, not medical advice.</p>
+            <p>Nutrition is an estimate, not medical advice. An unofficial student project, not run by any dining service.</p>
           </div>
         </footer>
       </div>

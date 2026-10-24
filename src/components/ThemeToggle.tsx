@@ -28,13 +28,18 @@ export default function ThemeToggle() {
       onClick={flip}
       aria-label={`Switch to ${next} mode`}
       title={`Switch to ${next} mode`}
-      className="group grid size-11 place-items-center border border-line text-ink transition-colors hover:border-ink"
+      className="grid size-11 place-items-center rounded-full text-ink transition-colors hover:bg-card active:scale-95"
     >
-      {/* A half-filled circle that turns over: filled half on the left in light mode, on the right in dark. */}
-      <svg viewBox="0 0 20 20" className="size-5 transition-transform duration-500 ease-out" style={{ transform: `rotate(${theme === 'dark' ? 180 : 0}deg)` }} aria-hidden="true">
-        <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M10 2a8 8 0 0 0 0 16z" fill="currentColor" />
-      </svg>
+      {theme === 'dark' ? (
+        <svg viewBox="0 0 20 20" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
+          <circle cx="10" cy="10" r="3.5" />
+          <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M4.3 15.7l1.4-1.4M14.3 5.7l1.4-1.4" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 20 20" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true">
+          <path d="M16.5 12.2A6.5 6.5 0 0 1 7.8 3.5a6.5 6.5 0 1 0 8.7 8.7z" />
+        </svg>
+      )}
     </button>
   );
 }

@@ -1,81 +1,113 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/figtree';
 
 /* Dark mode follows the toggle (data-theme on <html>), not just the system setting. */
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+/* Hover only where there's a real pointer, so a tap on a phone never leaves a stuck hover. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
 
 /*
- * Colour tokens. Scarlet and white are BU's; everything else is neutral so the
- * scarlet carries the design. Macros each have a colour and a shape:
- * protein ■ scarlet, carbs ● ink, fat ▲ grey.
+ * Colour tokens. A calm grey ground with white cards; ink for actions. The
+ * school colour comes from the school record (data/schools.ts) and is set on
+ * school pages only (see [data-school] below), for the band on your goal card
+ * and the selected day. Everywhere else stays neutral. Errors have their own
+ * red, so a school whose colour is red (or green) never reads as a warning.
+ * Protein, carbs and fat have colours, but they only appear inside the optional
+ * breakdown, always next to their names.
  */
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --surface: #f6f5f3;
-  --ink: #121212;
-  --muted: #6b6866;
-  --line: #e7e4e0;
-  --line-strong: #cfcac4;
-  --control: #8c8782; /* the edge of a text field: 3:1 against the page, so it can be found */
-  --scarlet: #cc0000;
-  --scarlet-ink: #b80000;
-  --scarlet-soft: #fbecec;
-  --on-scarlet: #ffffff;
-  --protein: #cc0000;
-  --carbs: #121212;
-  --fat: #8c8782;
+  --bg: #eef0f3;
+  --card: #ffffff;
+  --surface: #f6f7f9;
+  --ink: #16181d;
+  --muted: #5d636e;
+  --line: #e3e6eb;
+  --line-strong: #c9ced6;
+  --control: #8b919c; /* the edge of a text field: 3:1 against the card, so it can be found */
+  --school: var(--ink);
+  --on-school: #ffffff;
+  --danger: #c42b1c;
+  --danger-ink: #a8231a;
+  --danger-soft: #fdecea;
+  --good: #1f7a46;
+  --good-soft: #e5f4ea;
+  --warn-soft: #fff4d6;
+  --protein: #3b5bdb;
+  --carbs: #d98a1c;
+  --fat: #5e8c4a;
+  --shadow: 0 1px 2px rgb(22 24 29 / 0.06), 0 6px 20px -10px rgb(22 24 29 / 0.18);
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0c0c0d;
-  --surface: #151517;
-  --ink: #f4f3f1;
-  --muted: #9c9a98;
-  --line: #262629;
-  --line-strong: #3a3a3e;
-  --control: #76767b;
-  --scarlet: #cc0000;
-  --scarlet-ink: #ff5c5c;
-  --scarlet-soft: #2a1314;
-  --on-scarlet: #ffffff;
-  --protein: #e52222;
-  --carbs: #f4f3f1;
-  --fat: #77736f;
+  --bg: #0f1114;
+  --card: #181b20;
+  --surface: #1f2329;
+  --ink: #f1f3f5;
+  --muted: #a0a7b2;
+  --line: #2a2e35;
+  --line-strong: #3b4049;
+  --control: #7c838e;
+  --on-school: #16181d;
+  --danger: #f2554a;
+  --danger-ink: #ff8a80;
+  --danger-soft: #3a1917;
+  --good: #57c785;
+  --good-soft: #15291e;
+  --warn-soft: #2e2611;
+  --protein: #7b93ff;
+  --carbs: #f0b44f;
+  --fat: #8fb07a;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+}
+
+/* A school's own pages take its colour from the record. schoolScope() (components/ui.tsx)
+   works out both modes and the text colour on each, so any school colour stays legible. */
+[data-school] {
+  --school: var(--school-light);
+  --on-school: var(--on-school-light);
+}
+:root[data-theme='dark'] [data-school] {
+  --school: var(--school-dark);
+  --on-school: var(--on-school-dark);
 }
 
 @theme inline {
   --color-bg: var(--bg);
+  --color-card: var(--card);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-control: var(--control);
-  --color-scarlet: var(--scarlet);
-  --color-scarlet-ink: var(--scarlet-ink);
-  --color-scarlet-soft: var(--scarlet-soft);
-  --color-on-scarlet: var(--on-scarlet);
+  --color-school: var(--school);
+  --color-danger: var(--danger);
+  --color-danger-ink: var(--danger-ink);
+  --color-danger-soft: var(--danger-soft);
+  --color-on-school: var(--on-school);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-warn-soft: var(--warn-soft);
   --color-protein: var(--protein);
   --color-carbs: var(--carbs);
   --color-fat: var(--fat);
+  --shadow-card: var(--shadow);
 }
 
 @theme {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, sans-serif;
-  --animate-rise: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  --animate-fade: fade 0.3s ease both;
-  --animate-spin-slow: spin 60s linear infinite;
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-sans);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-fade: fade 0.18s ease both;
 
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-  }
   @keyframes fade {
     from {
       opacity: 0;
@@ -87,25 +119,33 @@
   html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    scrollbar-color: var(--line-strong) var(--bg);
+    scrollbar-width: thin;
   }
   body {
     @apply bg-bg font-sans text-ink antialiased;
-    font-feature-settings: 'cv11', 'ss01';
-    transition: background-color 0.25s ease, color 0.25s ease;
+    font-variant-numeric: tabular-nums;
   }
   h1,
   h2,
   h3 {
-    @apply font-display;
     text-wrap: balance;
   }
+  p,
+  li {
+    text-wrap: pretty;
+  }
   ::selection {
-    background: var(--scarlet);
-    color: var(--on-scarlet);
+    background: var(--school);
+    color: var(--on-school);
   }
   :focus-visible {
-    outline: 2px solid var(--scarlet);
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
+  }
+  input,
+  textarea {
+    caret-color: var(--school);
   }
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
@@ -113,49 +153,189 @@
   }
 }
 
-/* Range sliders: a hairline track, scarlet fill up to the thumb, a square thumb. */
+@layer components {
+  /* A white card, the app's one container. */
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  /* Pills: days, views and filters. */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease,
+      transform 120ms var(--ease-out);
+  }
+  .pill:active {
+    transform: scale(0.97);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pill:hover {
+      box-shadow: inset 0 0 0 1px var(--line-strong);
+    }
+  }
+  .pill[aria-pressed='true'],
+  .pill[aria-checked='true'] {
+    background: var(--ink);
+    color: var(--card);
+    box-shadow: none;
+  }
+
+  /* Actions */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.125rem;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 650;
+    transition:
+      background-color 150ms ease,
+      transform 120ms var(--ease-out);
+  }
+  .button:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .button-ink {
+    background: var(--ink);
+    color: var(--card);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .button-ink:hover {
+      background: color-mix(in oklab, var(--ink) 85%, var(--card));
+    }
+  }
+  .button-soft {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .button-soft:hover {
+      background: var(--line);
+    }
+  }
+  /* A smaller button for secondary spots that still keeps a 44px touch target:
+     the hit area reaches 4px past the drawn edge. */
+  .button-compact {
+    position: relative;
+    min-height: 2.25rem;
+    padding: 0 0.875rem;
+    font-size: 0.875rem;
+  }
+  .button-compact::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+
+  /* A text field with a visible edge. */
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem;
+    border-radius: 12px;
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--control);
+    transition: box-shadow 120ms ease;
+  }
+  .field:focus-within {
+    box-shadow: inset 0 0 0 2px var(--ink);
+  }
+  .field[data-invalid] {
+    box-shadow: inset 0 0 0 2px var(--danger);
+  }
+}
+
+/* Range sliders: a rounded track filled up to the thumb. */
 .range {
   --fill: 50%;
   appearance: none;
-  height: 1.5rem;
+  height: 1.75rem;
   background: transparent;
   cursor: pointer;
 }
 .range::-webkit-slider-runnable-track {
-  height: 2px;
-  background: linear-gradient(to right, var(--scarlet) var(--fill), var(--line-strong) var(--fill));
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--line-strong) var(--fill));
 }
 .range::-moz-range-track {
-  height: 2px;
-  background: linear-gradient(to right, var(--scarlet) var(--fill), var(--line-strong) var(--fill));
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--line-strong) var(--fill));
 }
 .range::-webkit-slider-thumb {
   appearance: none;
-  width: 16px;
-  height: 16px;
-  margin-top: -7px;
-  background: var(--bg);
-  border: 2px solid var(--scarlet);
-  transition: transform 0.15s ease;
+  width: 22px;
+  height: 22px;
+  margin-top: -8px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow:
+    0 0 0 2px var(--ink),
+    0 2px 6px rgb(0 0 0 / 0.2);
+  transition: transform 0.12s var(--ease-out);
 }
 .range::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 0;
-  background: var(--bg);
-  border: 2px solid var(--scarlet);
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow:
+    0 0 0 2px var(--ink),
+    0 2px 6px rgb(0 0 0 / 0.2);
 }
 .range:active::-webkit-slider-thumb {
-  transform: rotate(45deg);
+  transform: scale(1.12);
 }
 
-/* The calculator is a native <dialog>; give it a backdrop and an entrance. */
+/* The calculator is a native <dialog>: a sheet that rises from the bottom on a
+   phone and sits centred on a desktop. */
 dialog.sheet::backdrop {
-  background: rgb(0 0 0 / 0.45);
-  backdrop-filter: blur(2px);
+  background: rgb(10 12 16 / 0.45);
 }
 dialog.sheet[open] {
-  animation: rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: sheet-in 0.26s var(--ease-out) both;
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* "Another option": the plate turns over to the next one. */
+@keyframes plate-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-12deg) translateY(6px);
+  }
+}
+.plate-in {
+  animation: plate-in 0.2s var(--ease-out) both;
+  transform-origin: top center;
 }
 
 .no-scrollbar {

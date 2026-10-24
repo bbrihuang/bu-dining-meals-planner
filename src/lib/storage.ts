@@ -19,6 +19,15 @@ export function save(key: string, value: unknown) {
   }
 }
 
+/** Has this browser saved anything under `key` yet? */
+export function hasStored(key: string): boolean {
+  try {
+    return localStorage.getItem(key) != null;
+  } catch {
+    return false;
+  }
+}
+
 /** useState that's saved under `key` and restored on the next visit. */
 export function useStored<T>(key: string, fallback: T): [T, (value: T) => void] {
   const [value, setValue] = useState<T>(() => load(key, fallback));

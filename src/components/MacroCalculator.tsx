@@ -18,7 +18,7 @@ import {
 import { load, save } from '../lib/storage';
 import { fmt } from '../lib/targets';
 import type { Macros } from '../lib/types';
-import { MacroShape, MACROS } from './Shapes';
+import { MacroDot, MACROS } from './Shapes';
 import { Segmented } from './ui';
 
 interface Form {
@@ -127,7 +127,7 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
       aria-labelledby={titleId}
       onClose={onClose}
       onClick={(e) => e.target === dialog.current && onClose()}
-      className="sheet m-auto max-h-[min(92dvh,56rem)] w-[min(100%-1.5rem,40rem)] overflow-y-auto border border-line bg-bg p-0 text-ink"
+      className="sheet mx-auto mb-0 mt-auto max-h-[92dvh] w-full max-w-[40rem] overflow-y-auto rounded-t-3xl bg-card p-0 text-ink shadow-card sm:m-auto sm:max-h-[min(92dvh,56rem)] sm:w-[min(100%-1.5rem,40rem)] sm:rounded-3xl"
     >
       <form
         method="dialog"
@@ -136,14 +136,14 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
           apply();
         }}
       >
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-line bg-bg px-6 py-5">
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-line bg-card px-6 py-5">
           <div>
-            <h2 id={titleId} className="text-2xl font-semibold tracking-tight">
-              Calculate my macros
+            <h2 id={titleId} className="text-2xl font-bold tracking-tight">
+              Work out my numbers
             </h2>
             <p className="mt-1 text-sm text-muted">Daily targets from your body, activity and goal.</p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="grid size-9 shrink-0 place-items-center border border-line hover:border-ink">
+          <button type="button" onClick={onClose} aria-label="Close" className="grid size-11 shrink-0 place-items-center rounded-full bg-surface hover:bg-line">
             <svg viewBox="0 0 12 12" className="size-3" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <path d="M1 1l10 10M11 1 1 11" />
             </svg>
@@ -151,7 +151,7 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
         </div>
 
         <div className="space-y-8 px-6 py-6">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
             <Segmented
               label="Units"
               value={form.units}
@@ -212,8 +212,8 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
                     role="radio"
                     aria-checked={form.trainingDays === d}
                     onClick={() => set('trainingDays', d)}
-                    className={`h-10 border font-display text-sm font-semibold tabular-nums transition-colors ${
-                      form.trainingDays === d ? 'border-ink bg-ink text-bg' : 'border-line text-muted hover:border-ink hover:text-ink'
+                    className={`h-11 rounded-xl text-sm font-semibold transition-colors ${
+                      form.trainingDays === d ? 'bg-ink text-card' : 'bg-surface text-muted hover:text-ink'
                     }`}
                   >
                     {d}
@@ -232,8 +232,8 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
                   role="radio"
                   aria-checked={form.goal === g.id}
                   onClick={() => set('goal', g.id)}
-                  className={`border px-2 py-2.5 text-center transition-colors ${
-                    form.goal === g.id ? 'border-scarlet bg-scarlet text-on-scarlet' : 'border-line hover:border-ink'
+                  className={`rounded-xl px-2 py-2.5 text-center transition-colors ${
+                    form.goal === g.id ? 'bg-ink text-card' : 'bg-surface hover:bg-line'
                   } ${g.id === 'maintain' ? 'col-span-2 sm:col-span-1' : ''}`}
                 >
                   <span className="block text-sm font-semibold">{g.label}</span>
@@ -271,12 +271,12 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
           </Step>
         </div>
 
-        <div className="sticky bottom-0 border-t border-line bg-bg px-6 py-5" aria-live="polite">
+        <div className="sticky bottom-0 border-t border-line bg-card px-6 py-5" aria-live="polite">
           {result ? (
             <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Your daily targets</p>
-                <p className="mt-1 font-display text-4xl font-semibold tabular-nums tracking-tight">
+                <p className="text-sm font-semibold text-muted">Your daily goal</p>
+                <p className="mt-0.5 text-4xl font-bold tracking-tight">
                   {fmt(result.macros.calories)} <span className="text-base font-medium text-muted">cal</span>
                 </p>
               </div>
@@ -284,9 +284,9 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
                 {MACROS.map((m) => (
                   <div key={m.key}>
                     <p className="flex items-center gap-1.5 text-xs text-muted">
-                      <MacroShape macro={m.key} /> {m.label}
+                      <MacroDot macro={m.key} className="size-1.5" /> {m.label}
                     </p>
-                    <p className="font-display text-lg font-semibold tabular-nums">{result.macros[m.key]}g</p>
+                    <p className="text-lg font-bold">{result.macros[m.key]}g</p>
                   </div>
                 ))}
               </div>
@@ -302,9 +302,9 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
           <button
             type="submit"
             disabled={!result}
-            className="mt-4 h-12 w-full bg-scarlet font-semibold text-on-scarlet transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-35"
+            className="button button-ink mt-4 h-12 w-full disabled:cursor-not-allowed disabled:opacity-35"
           >
-            Use these targets
+            Use these numbers
           </button>
           <p className="mt-2 text-center text-xs text-muted">An estimate for healthy adults, not medical advice.</p>
         </div>
@@ -316,8 +316,8 @@ export default function MacroCalculator({ open, onClose, onApply }: { open: bool
 function Step({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
     <section>
-      <h3 className="mb-4 flex items-center gap-3 font-sans text-sm font-semibold">
-        <span className="grid size-6 place-items-center bg-ink font-display text-xs text-bg">{n}</span>
+      <h3 className="mb-4 flex items-center gap-3 text-base font-bold">
+        <span className="grid size-7 place-items-center rounded-full bg-surface text-sm font-bold">{n}</span>
         {title}
       </h3>
       {children}
@@ -339,14 +339,14 @@ function Field(props: { label: string; hint?: string; unit?: string; value: stri
 
 function NumberBox(props: { label?: string; unit?: string; value: string; onChange: (v: string) => void; className?: string }) {
   return (
-    <div className={`flex h-11 items-center border border-control px-3 transition-colors focus-within:border-ink ${props.className ?? ''}`}>
+    <div className={`field ${props.className ?? ''}`}>
       <input
         type="text"
         inputMode="decimal"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value.replace(/[^\d.]/g, ''))}
         aria-label={props.label}
-        className="w-full min-w-0 bg-transparent font-display font-medium tabular-nums outline-none"
+        className="w-full min-w-0 bg-transparent font-semibold outline-none"
       />
       {props.unit && <span className="pl-1 text-sm text-muted">{props.unit}</span>}
     </div>

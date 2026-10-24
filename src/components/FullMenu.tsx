@@ -3,11 +3,10 @@
 // for its options.
 import { useState } from 'react';
 import { isSuspect } from '../lib/classify';
-import { minutesNow, parseHours } from '../lib/data';
+import { minutesNow, parseHours, servingState } from '../lib/data';
 import { fmt } from '../lib/targets';
 import { PERIOD_LABEL, PERIODS, type HallDay, type MenuItem, type Period } from '../lib/types';
-import { MacroShape, MACROS } from './Shapes';
-import { Segmented } from './ui';
+import { DietTags, Segmented, StateChip } from './ui';
 
 /** The meal being served now, or the next one today; else the first. */
 function defaultPeriod(day: HallDay, periods: Period[], timeZone: string | null): Period {
@@ -16,14 +15,17 @@ function defaultPeriod(day: HallDay, periods: Period[], timeZone: string | null)
   return periods.find((p) => (parseHours(day[p]?.hours)?.[1] ?? 0) > now) ?? periods[0];
 }
 
-const TAGS: [string, string, string][] = [
-  ['vegan', 'VG', 'Vegan'],
-  ['vegetarian', 'V', 'Vegetarian'],
-  ['halal', 'H', 'Halal'],
-  ['gluten-free', 'GF', 'Gluten free'],
-];
-
-export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when the day is today. */ timeZone: string | null }) {
+export default function FullMenu({
+  day,
+  timeZone,
+  showMacros,
+}: {
+  day: HallDay;
+  /** Set when the day is today. */
+  timeZone: string | null;
+  /** Protein, carbs and fat per dish, only when the reader has asked for them. */
+  showMacros: boolean;
+}) {
   const periods = PERIODS.filter((p) => day[p]?.items.length);
   const [period, setPeriod] = useState<Period>(() => defaultPeriod(day, periods, timeZone));
   const [query, setQuery] = useState('');
@@ -38,15 +40,10 @@ export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when
 
   return (
     <div>
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_16rem]">
-        <Segmented
-          label="Meal"
-          value={period}
-          options={periods.map((p) => ({ value: p, label: PERIOD_LABEL[p] }))}
-          onChange={setPeriod}
-        />
-        <label className="flex h-11 items-center gap-2 border border-control px-3 transition-colors focus-within:border-ink">
-          <svg viewBox="0 0 16 16" className="size-4 shrink-0 text-muted" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <div className="card space-y-3 p-4">
+        <Segmented label="Meal" value={period} options={periods.map((p) => ({ value: p, label: PERIOD_LABEL[p] }))} onChange={setPeriod} />
+        <label className="field">
+          <svg viewBox="0 0 16 16" className="size-4 shrink-0 text-muted" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
             <circle cx="7" cy="7" r="5" />
             <path d="m11 11 4 4" />
           </svg>
@@ -56,26 +53,29 @@ export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search this menu"
             aria-label="Search this menu"
-            className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted"
+            className="w-full min-w-0 bg-transparent outline-none placeholder:text-muted"
           />
         </label>
-      </div>
-      <div className="mt-3 space-y-1 text-muted">
-        {meal?.hours && <p className="text-sm tabular-nums">Served {meal.hours}</p>}
-        {/* The chips beside each dish are abbreviations, and a tooltip doesn't exist on a phone. */}
-        <p className="text-xs">{TAGS.map(([, short, label]) => `${short} ${label.toLowerCase()}`).join(' · ')}</p>
+        {meal?.hours && (
+          <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            Served {meal.hours}
+            <StateChip state={servingState(meal.hours, timeZone)} />
+          </p>
+        )}
       </div>
 
-      <div key={period} className="mt-6 animate-fade space-y-8">
+      <div key={period} className="mt-4 animate-fade space-y-4">
         {stations.map((s) => (
-          <section key={s.name} aria-label={s.name}>
-            <h3 className="mb-2 flex items-baseline justify-between font-sans text-xs font-semibold uppercase tracking-[0.16em]">
+          <section key={s.name} aria-labelledby={`st-${s.name}`} className="card px-2 py-2">
+            <h3 id={`st-${s.name}`} className="flex items-baseline justify-between px-3 pb-1 pt-2 text-base font-bold">
               {s.name}
-              <span className="font-normal tabular-nums text-muted">{s.items.length}</span>
+              <span className="text-sm font-medium text-muted">
+                {s.items.length} {s.items.length === 1 ? 'dish' : 'dishes'}
+              </span>
             </h3>
-            <ul className="divide-y divide-line border-y border-line">
+            <ul>
               {s.items.map((item) => (
-                <MenuRow key={item.id} item={item} startOpen={!!q && !!item.options} />
+                <MenuRow key={item.id} item={item} startOpen={!!q && !!item.options} showMacros={showMacros} />
               ))}
             </ul>
           </section>
@@ -86,40 +86,19 @@ export default function FullMenu({ day, timeZone }: { day: HallDay; /** Set when
   );
 }
 
-function Tags({ item }: { item: MenuItem }) {
-  const tags = TAGS.filter(([t]) => item.tags.includes(t) && !(t === 'vegetarian' && item.tags.includes('vegan')));
-  if (!tags.length) return null;
-  return (
-    <span className="ml-2 inline-flex gap-1 align-middle">
-      {tags.map(([t, short, label]) => (
-        <abbr key={t} title={label} className="border border-line-strong px-1 text-[0.625rem] font-semibold leading-4 tracking-wide text-muted no-underline">
-          {short}
-        </abbr>
-      ))}
-    </span>
-  );
-}
-
 /** Shown under a dish whose calories or macros look like a label mistake. */
 function SuspectNote({ item }: { item: MenuItem }) {
   if (!isSuspect(item)) return null;
-  return <span className="mt-0.5 block text-xs text-scarlet-ink">Unusual numbers: check the label</span>;
+  return <span className="mt-0.5 block text-xs font-medium text-danger-ink">Unusual numbers: check the label</span>;
 }
 
+/** Protein, carbs and fat for one serving, spelled out. */function MacroLine({ item }: { item: MenuItem }) {  return (    <span className="mt-0.5 block text-xs text-muted">      {Math.round(item.protein)}g protein · {Math.round(item.carbs)}g carbs · {Math.round(item.fat)}g fat    </span>  );}
 function Numbers({ item }: { item: MenuItem }) {
   return (
-    <span className="flex flex-col items-end gap-1 text-right">
-      <span className="text-sm tabular-nums">
-        <span className="font-medium">{fmt(item.calories)}</span>
+    <span className="flex flex-col items-end text-right">
+      <span className="text-sm">
+        <span className="font-semibold">{fmt(item.calories)}</span>
         <span className="text-muted"> cal</span>
-      </span>
-      <span className="flex items-center gap-2.5 text-xs tabular-nums text-muted">
-        {MACROS.map((m) => (
-          <span key={m.key} className="flex items-center gap-1">
-            <MacroShape macro={m.key} className="size-1.5" />
-            {Math.round(item[m.key])}g
-          </span>
-        ))}
       </span>
     </span>
   );
@@ -127,39 +106,42 @@ function Numbers({ item }: { item: MenuItem }) {
 
 function Details({ item }: { item: MenuItem }) {
   return (
-    <div className="space-y-2 pb-4 text-sm">
+    <div className="space-y-1.5 px-3 pb-3 text-sm">
       {item.description && <p className="text-muted">{item.description}</p>}
-      <p className="flex flex-wrap gap-x-4 gap-y-1 text-xs tabular-nums text-muted">
+      <p className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
         <span>Fiber {item.fiber}g</span>
         <span>Sugar {item.sugar}g</span>
         <span>Sodium {fmt(item.sodium)}mg</span>
       </p>
-      {item.allergens.length > 0 && <p className="text-xs">Contains: {item.allergens.join(', ')}</p>}
+      {item.allergens.length > 0 && <p className="text-xs">Contains: {item.allergens.join(', ')}. With a serious allergy, check with the dining staff.</p>}
     </div>
   );
 }
 
-function MenuRow({ item, startOpen }: { item: MenuItem; startOpen: boolean }) {
+function MenuRow({ item, startOpen, showMacros }: { item: MenuItem; startOpen: boolean; showMacros: boolean }) {
   const [open, setOpen] = useState(startOpen);
   const cyo = !!item.options;
   return (
-    <li>
+    <li className={`rounded-xl transition-colors ${open ? 'bg-surface' : ''}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-3 text-left transition-colors hover:text-scarlet-ink"
+        className="grid min-h-12 w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-surface"
       >
         <span className="min-w-0">
-          <span className="font-medium text-ink">{item.name}</span>
-          <Tags item={item} />
-          <span className="mt-0.5 block text-xs text-muted">{cyo ? `${item.options!.length} options to build your own` : item.serving}</span>
+          <span className="font-semibold">{item.name}</span>
+          <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
+            {cyo ? `Build your own · ${item.options!.length} options` : item.serving}
+            <DietTags tags={item.tags} />
+          </span>
+          {showMacros && !cyo && <MacroLine item={item} />}
           <SuspectNote item={item} />
         </span>
         {cyo ? (
-          <span className="grid size-7 place-items-center border border-line-strong text-ink" aria-hidden="true">
-            <svg viewBox="0 0 12 12" className={`size-2.5 transition-transform ${open ? 'rotate-45' : ''}`} stroke="currentColor" strokeWidth="1.5">
-              <path d="M6 1v10M1 6h10" />
+          <span className="grid size-8 place-items-center rounded-full bg-surface text-ink" aria-hidden="true">
+            <svg viewBox="0 0 12 12" className={`size-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m2.5 4.5 3.5 3.5 3.5-3.5" />
             </svg>
           </span>
         ) : (
@@ -168,13 +150,16 @@ function MenuRow({ item, startOpen }: { item: MenuItem; startOpen: boolean }) {
       </button>
       {open &&
         (cyo ? (
-          <ul className="mb-3 animate-fade divide-y divide-line border-l-2 border-scarlet bg-surface">
+          <ul className="animate-fade px-1 pb-2">
             {item.options!.map((o) => (
-              <li key={o.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-2.5">
+              <li key={o.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-lg px-3 py-2">
                 <span className="min-w-0">
-                  <span className="text-sm font-medium">{o.name}</span>
-                  <Tags item={o} />
-                  <span className="block text-xs text-muted">{o.serving}</span>
+                  <span className="text-sm font-semibold">{o.name}</span>
+                  <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+                    {o.serving}
+                    <DietTags tags={o.tags} />
+                  </span>
+                  {showMacros && <MacroLine item={o} />}
                   <SuspectNote item={o} />
                 </span>
                 <Numbers item={o} />

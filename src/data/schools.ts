@@ -25,6 +25,8 @@ export interface School {
   name: string;
   /** Two or three letters for the school's badge. */
   short: string;
+  /** The school colour, used for the band on your goal card and the selected day. */
+  color: string;
   city: string;
   provider: ProviderName;
   /** The dining halls' time zone, so "today" means the school's today. */
@@ -37,6 +39,7 @@ export const SCHOOLS: School[] = [
     id: 'bu',
     name: 'Boston University',
     short: 'BU',
+    color: '#cc0000',
     city: 'Boston, MA',
     provider: 'bu',
     timeZone: 'America/New_York',
